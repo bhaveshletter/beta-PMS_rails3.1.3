@@ -1,0 +1,36 @@
+<h3> Projects created by you </h3>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+  </tr>
+  <% @projects.each do |project| %>
+    <tr>
+      <td><%= project.name %></td>
+      <td><%= project.description %></td>
+      <td><%= link_to 'Show', project %></td>
+    </tr>
+  <%end%>
+
+</table>
+<hr/>
+
+<h3> Assigned projects to you</h3>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+  </tr>
+  <% @assigned_projects.each do |assign_project| %>
+    <tr>
+      <td><%= assign_project.name %></td>
+      <td><%= assign_project.description %></td>
+      <td><%= link_to 'Show', assign_project %></td>
+    </tr>
+  <%end%>
+
+</table>
+<br/>
+
+<%= link_to 'New Project', new_project_path %>
+

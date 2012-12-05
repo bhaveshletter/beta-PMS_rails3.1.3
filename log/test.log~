@@ -1,0 +1,2 @@
+Mysql2::Error: Table 'inxpms_test.users' doesn't exist: SHOW FIELDS FROM `users`
+Mysql2::Error: Table 'inxpms_test.users' doesn't exist: SHOW FIELDS FROM `users`

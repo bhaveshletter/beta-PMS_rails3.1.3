@@ -1,0 +1,80 @@
+
+<h3> Create and assign task </h3>
+<%= form_for @task, :remote => true do |f| %>
+
+  <% if @task.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@task.errors.count, "error") %> prohibited this product from being saved:</h2>
+      <ul>
+        <% @task.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :project_id %>
+  <div class="field">
+    <%= f.text_field :name, :placeholder => "Name" %> *
+  </div>
+
+  <div class="field">
+    <%= f.text_area :description, :size=>"35X4", :placeholder => "Description" %> *
+  </div>
+
+  <div class="field">
+    <%= f.text_field :start_date, :placeholder => "Start date", :size => "15" %>
+  </div>
+
+  <div class="field">
+    <%= f.text_field :end_date, :placeholder => "End date", :size => "15" %>
+  </div>
+
+  <div class="field">
+    <%= f.text_field :hours, :placeholder => "Hours", :size => "10" %>
+    <%= f.text_field :minutes, :placeholder => "Minutes", :size => "10" %>
+  </div>
+
+  <% unless assign_user(@task.project_id).empty? %>
+    <div class="field">
+      <%= f.select :responsible_id, options_from_collection_for_select(assign_user(@task.project_id), 'id', 'full_name'), { :prompt => "Project members" } %>
+    </div>
+  <% end %>
+
+  <% unless milestone_list(@task.project_id).empty? %>
+    <div class="field">
+      <%= f.select :milestone_id, options_from_collection_for_select(milestone_list(@task.project_id), 'id', 'name'), { :prompt => "Milestone name" } %>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit :id => "submit_id" %>
+  </div>
+  <div id = "wait_id" style="display:none;"> <%= image_tag("/assets/loading.gif") %> </div>
+<% end %>
+
+<script type="text/javascript">
+
+  $(function() {
+    $("#task_start_date").datetimepicker({dateFormat: 'dd-M-yy'});
+    $("#task_end_date").datetimepicker({dateFormat: 'dd-M-yy'});
+    $("#milestone_end_date").datetimepicker({dateFormat: 'dd-M-yy'});
+    $("#milestone_end").datetimepicker({dateFormat: 'dd-M-yy'});
+    $("#task_hours").val('');
+    $("#task_minutes").val('');
+  });
+
+  $("#new_task").submit(function(){
+
+    if($("#task_hours").val() == ''){
+      $("#task_hours").val('0')
+    }
+    if($("#task_minutes").val() == ''){
+      $("#task_minutes").val('0')
+    }
+
+    $("input#submit_id").attr("disabled", "disabled");
+    $("#wait_id").css("display", "block");
+  });
+  
+</script>

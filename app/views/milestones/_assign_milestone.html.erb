@@ -1,0 +1,108 @@
+<style type="text/css">
+
+  #overlay {
+    z-index:1000;
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    width:100%;
+    background:#000;
+    opacity:0.45;
+    -moz-opacity:0.45;
+    filter:alpha(opacity=45);
+    display:none;
+  }
+
+  #milestone_process{
+    z-index:1100;
+    color:#00;
+    background-color: #FFFFFF;
+    border: 1px solid black;
+    margin: 20px auto 0;
+    padding: 20px 40px;
+    width: 68%;
+    position: absolute;
+  }
+</style>
+
+<!-- START Add or Assign milestone to the project -->
+<div id="overlay"> </div>
+
+<div id="milestone_process" style="display:none;">
+  <div id="selected_milestone">
+    <table>
+
+    </table>
+  </div>
+
+  <div class = "milestone_dropdown_id">
+    <% unless milestone_list(@project.id).empty? %>
+      <%= select_tag :milestone_id, options_from_collection_for_select(milestone_list(@project.id), 'id', 'name'), { :prompt => "Select milestone" } %>
+    <% end %>
+  </div>
+
+  <%= submit_tag "Assign", :id => 'submit_milestone', :name => @project.id, :style => "display:none;" %>
+  <div class="create_milestone_cls">
+    <%= render :partial => 'milestones/create_milestone' %>
+  </div>
+  <%= link_to "Close", '#', :onclick => "close_fun()" %>
+
+</div>
+<!-- END Add or Assign milestone to the project -->
+
+<script type="text/javascript">
+
+  /* START To assign milestone to selected task.*/
+  $("#submit_milestone").click(function(){
+    var milArray = [];
+    $('#selected_milestone input[type="checkbox"]:checked').each(function() {
+      milArray.push($(this).attr("id"));
+    })
+    if($.isEmptyObject(milArray)){
+      return false;
+    }else{      
+      var url = '/tasks/milestone_assignment?milestone_id='+$('#milestone_id').find('option:selected').val()+'&project_id='+$(this).attr("name")+'&task_ids='+milArray;
+      $.get(url, function(html){
+      });    
+      return false;
+    }
+  });
+  /* END To assign milestone to selected task.*/
+  
+  /* START To disply assign button */
+  $('#milestone_id').change(function() {    
+    if($(this).find('option:selected').text() != "Select milestone"){
+      $("#submit_milestone").css("display", "inline");
+    }else{
+      $("#submit_milestone").css("display", "none");
+    }
+  });
+  /* END To disply assign button */
+
+  /* START  Open popup for create or assign milestone. */
+  function milestone_fun() {
+    //var o = document.getElementById('overlay');
+    //o.style.visibility = 'visible';
+    $("#overlay").show();
+    $("#milestone_process").show();
+
+    $("#selected_milestone table").empty();
+    $('input[type="checkbox"]:checked').each(function() {
+      $('input[type="checkbox"]:checked').attr('checked','checked');
+      var htmlStr = $(this).closest('tr').html();            
+      $("#selected_milestone table").prepend("<tr>"+htmlStr+"</tr>");
+    });    
+    $("#selected_milestone table").prepend('<tr><th>Name</th><th>Description</th><th>Start Date</th><th>End Date</th><th>Hours</th><th>Minutes</th><th>Assign By</th></tr>');
+  }
+  /* END Open popup for create or assign milestone. */
+
+  /* START Close popup for assign milestone */
+  function close_fun(){
+    $("#overlay").hide();
+    $("#milestone_process").hide();
+  }
+  /* END Close popup for assign milestone */
+  
+</script>
+

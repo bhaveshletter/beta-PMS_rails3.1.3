@@ -1,0 +1,26 @@
+<h3> Tasks list</h3>
+<% if !@tasks.empty? %>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+      <th>Hours</th>
+      <th>Minutes</th>
+      <th>Assign To</th>
+    </tr>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td><%= task.name %></td>
+        <td><%= task.description %></td>
+        <td><%= task.start_date %></td>
+        <td><%= task.end_date %></td>
+        <td><%= task.hours %></td>
+        <td><%= task.minutes %></td>
+        <td><%= task.responsible_id rescue nil %></td>
+      <!--      <td><%#= link_to 'Show', project %></td>  -->
+      </tr>
+    <%end%>
+  </table>
+<% end %>

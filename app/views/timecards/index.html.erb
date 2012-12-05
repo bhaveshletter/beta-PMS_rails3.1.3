@@ -1,0 +1,27 @@
+<h1>Listing Timecards</h1>
+<table>
+  <tr>
+    <th>Project</th>
+    <!--<th>User</th>-->
+    <th>Time Duration</th>
+    <th>Role</th>
+  </tr>
+
+  <%@timecards.each do |timecard|%>
+    <tr>
+      <td><%= timecard.project_id %></td>
+      <!--<td><%#= timecard.user_id %></td>-->
+      <td><% @tm = timecard.time_duration.divmod(60) %>
+        <% @hours = @tm[0] > 9 ? @tm[0].to_s : '0' + @tm[0].to_s %>
+        <% @minutes = @tm[1] > 9 ? @tm[1].to_s : '0' + @tm[1].to_s %>
+        <%#= @hours + ":" + @tm[1].to_s %>
+        <%= @hours + ":" + @minutes %>
+        <%#=  @tm[0].to_s + ":" + @tm[1].to_s %>
+      </td>
+      <td><%= timecard.role %></td>
+    </tr>
+  <% end %>
+</table>
+<br/> 
+<%= link_to 'New Timecard', new_timecard_path %>
+

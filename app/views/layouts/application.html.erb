@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Inxpms</title>
+    <%= stylesheet_link_tag "application" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <div id="container">
+      <div id ="flash_id">
+        <%= render 'shared/noticemsg' %>
+      </div>
+      <%= render 'users/menu/registration_items' %>
+      <%= render 'users/menu/login_items' %>
+      
+      <%= yield %>
+    </div>
+  </body>
+</html>

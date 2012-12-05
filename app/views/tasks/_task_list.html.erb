@@ -1,0 +1,90 @@
+
+<h3> Tasks created by you </h3>
+
+<% unless @task_list.empty? %>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+      <th>Hours</th>
+      <th>Minutes</th>
+      <th>Assign To</th>
+    <div class="milestone_link" style="display:none; float: right; margin-right: 10px;"> <%= link_to "Assign Milestone", '#', :onclick => 'milestone_fun()' %> </div>
+  </tr>
+  <% @task_list.each do |task| %>
+    <tr id ="<%= task.id%>">
+      <td><%= task.name %></td>
+      <td><%= task.description %></td>
+      <td><%= task.start_date.strftime("%d/%b/%Y %H:%M") if !task.start_date.nil? %></td>
+      <td><%= task.end_date.strftime("%d/%b/%Y %H:%M") if !task.end_date.nil? %></td>
+      <td><%= task.hours %></td>
+      <td><%= task.minutes %></td>
+      <td><%= task.responsible_user.full_name if !task.responsible_user.nil? %> </td>
+      <% if task.milestone_id.nil? %>
+        <td><%= check_box_tag task.id %></td>
+      <% else %>
+        <td title = "Completion Date: <%=  task.milestone.end_date %>"> <%= task.milestone.name %> </td>
+      <% end %>
+    <!--      <td><%#= link_to 'Show', project %></td>  -->
+    </tr>
+  <% end %>
+  </table>
+<% end %>
+<hr />
+
+<h3> Assiged tasks to you </h3>
+<% unless @assigned_task.empty? %>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+      <th>Hours</th>
+      <th>Minutes</th>
+      <th>Assign By</th>
+      <th>Milestone</th>
+    </tr>
+    <% @assigned_task.each do |assign_task| %>
+      <tr id ="<%= assign_task.id%>">
+        <td><%= assign_task.name %></td>
+        <td><%= assign_task.description %></td>
+        <td><%= assign_task.start_date.strftime("%d/%b/%Y %H:%M") if !assign_task.start_date.nil? %></td>
+        <td><%= assign_task.end_date.strftime("%d/%b/%Y %H:%M") if !assign_task.end_date.nil? %></td>
+        <td><%= assign_task.hours %></td>
+        <td><%= assign_task.minutes %></td>
+        <td><%= assign_task.user.full_name %></td>
+        <% if !assign_task.milestone_id.nil? %>
+          <td title = "Completion Date: <%= assign_task.milestone.end_date %>"> <%= assign_task.milestone.name %> </td>
+        <% end %>
+
+                      <!--      <td><%#= link_to 'Show', project %></td>  -->
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+
+<script type="text/javascript">
+  /* START display Add milestone link when task select */
+  var count = 0;
+  $("input[type='checkbox']").live("click", function(){
+    if($(this).is(':checked')){
+      count= count + 1;
+    }else{
+      count= count - 1;
+    }
+
+    if(count > 0){
+      $(".milestone_link").css("display", "block");
+    }else{
+      $(".milestone_link").css("display", "none"); 
+    }
+  });
+  /* END display Add milestone lik */
+  
+</script>
+
+
+

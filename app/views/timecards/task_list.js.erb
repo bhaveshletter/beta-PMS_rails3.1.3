@@ -1,0 +1,4 @@
+$('div.task_select').empty();
+<%# type = params[:type].nil? ? 'business' : params[:type] %>
+<%# type = params[:timecard[:task_id].nil? ? '@timecard.task_id ' : params[:type]  %>
+$('div.task_select').html("<%= escape_javascript(select(:timecard, :task_id, @tasks.map{|t| [t.name,t.id]}, :prompt => 'Please Select Task')) %>")

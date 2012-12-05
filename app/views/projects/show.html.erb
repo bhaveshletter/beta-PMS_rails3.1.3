@@ -1,0 +1,48 @@
+
+<p>
+  <b>Name:</b>
+  <%= @project.name %>
+</p>
+<p>
+  <b>Description:</b>
+  <%= @project.description %>
+</p>
+<!-- START To list project participants -->
+<% @project_participants = assign_user(@project.id) %>
+<% unless @project_participants.empty? %>
+  <b> Prject Participants </b>
+  <%= @project_participants.collect{|pp| pp.full_name}.join(' | ') %>
+<% end %>
+<br />
+<!-- END To list project participants -->
+
+<%= link_to 'Edit', edit_project_path(@project) %> |
+<%= link_to 'Back', projects_path %> 
+
+<div id="create_milestone_id">
+  <br />
+  <%= link_to "Create Milestone", '#', :onclick => "$('#add_milestone_id').toggle();" %>
+  <div id="add_milestone_id" style="display:none;">
+    <br />
+    <%= form_for Milestone.new, :remote => true do |mf| %>
+      <%= mf.hidden_field :project_id, :value => @project.id %>
+      <%= mf.text_field :name, :placeholder => "Milestone name" %> *
+      <%= mf.text_field :end_date, :placeholder => "End date of milestone" %>
+      <%= mf.submit %>
+    <% end %>
+  </div>
+</div>
+
+<div id = "assign_milestone_id">
+  <%= render :partial => "milestones/assign_milestone" %>
+</div>
+
+<br />
+<%= link_to "Create Task", '#', :onclick => "$('#task_form_id').toggle();" %> <br />
+<div id = "task_form_id" style="display:none;">
+  <%= render :partial => "tasks/form" %>
+</div>
+
+<div id = "task_list_id">
+  <%= render :partial => "tasks/task_list" %>
+</div>

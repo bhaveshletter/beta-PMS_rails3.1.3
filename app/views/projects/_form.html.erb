@@ -1,0 +1,51 @@
+<%= form_for @project do |f| %>
+  <% if @project.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@project.errors.count, "error") %> prohibited this product from being saved:</h2>
+      <ul>
+        <% @project.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.text_field :name, :placeholder => "Name" %>
+  </div>
+
+  <div class="field">
+    <%= f.text_area :description, :size=>"35X4", :placeholder => "Description" %>
+  </div>
+
+  <!-- START Organization member list --->
+  <% organization_members.each do |i| %>
+    <% if i.department_id.nil? %>
+      <b> Admin </b>
+    <% elsif i.department_id == 1 %>
+      <b> Manager </b>
+    <% elsif i.department_id == 2 %>
+      <b> QA </b>
+    <% elsif i.department_id == 3 %>
+      <b> Design </b>
+    <% elsif i.department_id == 4 %>
+      <b> Coding </b>
+    <% end %>
+    <% if @project.id.nil? %>
+      <%= check_box_tag "project[member_ids][]", i.id %> <%= i.full_name %> | <%= i.email %> <br />
+    <% else %>
+      <%= check_box_tag "project[member_ids][]", i.id, assign_user(@project.id).include?(i) %> <%= i.full_name %> | <%= i.email %> <br />
+    <% end %>
+  <% end %>
+  <!-- END Organization member list --->
+ 
+  <!--div class="field">
+  <%#= select_tag "participants[]", options_from_collection_for_select(user_project_members, 'id', 'full_name'), :multiple => :multiple %>
+  </div-->
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+
+<% end %>
+

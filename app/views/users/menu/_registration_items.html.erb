@@ -1,0 +1,11 @@
+<% if user_signed_in? %>
+  <li style="width: 70%; display:inline;">
+    <%= link_to('Create User', new_user_registration_path) if current_user.department_id == 1 %> |
+    <%= link_to('Change Password', edit_user_registration_path) %> |
+    <%= link_to('Update Profile', edit_profile_user_registration_path) %> |
+    <%= link_to('Projects', projects_path) %> |
+    <%= link_to('Timecards', new_timecard_path) %> |
+  </li>
+<% end %>
+
+

@@ -1,0 +1,6 @@
+<p> Hi <%= @user.email %>,</p>
+<p> Welcome To InxPMS and thanks for signing up! </p> 
+<h3> Sign in to your account: </h3>
+<p> <%= link_to 'Click for sign in', new_user_session_url, :target => "_blank" %>  </p>
+<h3> email:  </h3> <p> <%= @user.email %> </p>
+<h3> password: </h3> <p> <%= @user.password %> </p>

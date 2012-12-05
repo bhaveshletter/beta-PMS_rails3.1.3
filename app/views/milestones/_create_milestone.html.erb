@@ -1,0 +1,10 @@
+<%= link_to "Create Milestone", '#', :onclick => "$('#add_milestone').toggle();" %> <br />
+<div id="add_milestone" style="display:none;">
+  <%= form_for Milestone.new, :remote => true, :html => {:id => 'new_milestone_form'} do |mf| %>
+    <%= mf.hidden_field :project_id, :value => @project.id %>
+    <%= mf.text_field :name, :placeholder => "Milestone name" %> *
+    <%= mf.text_field :end_date, :id => "milestone_end", :placeholder => "End date of milestone" %>
+    <%= mf.submit %>
+  <% end %>
+</div>
+<br />

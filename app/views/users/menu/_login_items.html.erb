@@ -1,0 +1,12 @@
+
+<% if user_signed_in? %>
+  <li style="float:right; display:inline;">
+    Welcome <%= current_user.full_name.capitalize %>!
+    <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
+  </li>
+<% else %>
+  <li style="display:inline;">
+    <%= link_to('Login', new_user_session_path)  %> |
+    <%= link_to 'New Organization', new_organization_path %>
+  </li>
+<% end %>

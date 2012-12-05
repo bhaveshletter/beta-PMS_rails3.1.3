@@ -1,0 +1,14 @@
+<h3> Create user</h3>
+
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+  <div> <%= f.text_field :full_name, :placeholder => "Your full name" %> * </div> <br />
+  <!--div> <%#= f.text_field :company_name, :placeholder => "Company or organization" %> </div> <br />
+  <div> <%#= f.select :user_type_id, User::USER_TYPE %> </div> <br /-->
+  <div> <%= f.select :department_id, User::DEPARTMENT, :prompt => 'Select Department' %> * </div> <br />
+  <div> <%= f.email_field :email, :placeholder => "Email" %> * </div> <br />
+  <div> <%= f.password_field :password, :placeholder => "Password" %> * </div> <br />
+  <div> <%= f.submit "Create user" %> </div>
+<% end %>
+
+<%= render "users/links" %>

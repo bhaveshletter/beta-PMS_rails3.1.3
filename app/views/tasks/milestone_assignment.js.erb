@@ -1,0 +1,10 @@
+$("div#flash_id").html("<%= escape_javascript(render :partial => '/shared/noticemsg') %>");
+$("#overlay").hide();
+$("#milestone_process").hide();
+$("#task_list_id").empty();
+$("#task_list_id").html("<%= escape_javascript(render :partial => '/tasks/task_list') %>");
+
+
+
+
+
